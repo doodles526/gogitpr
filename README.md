@@ -1,3 +1,5 @@
+[![BuildStatus](https://travis-ci.org/doodles526/gogitpr.svg?branch=master)](https://travis-ci.org/doodles526/gogitpr)
+
 # gogitpr
 
 gogitpr is a set of libraries for fetching Github API data and an abstraction
