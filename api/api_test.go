@@ -5,6 +5,7 @@ import (
 	"net/url"
 	"testing"
 
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -42,6 +43,7 @@ func TestDoPagination(t *testing.T) {
 		userAgent: "pr-test-code",
 		version:   Version3,
 		client:    &http.Client{},
+		logger:    logrus.New().WithFields(logrus.Fields{"prefix": "TEST_API"}),
 	}
 
 	a := &requestArgs{
