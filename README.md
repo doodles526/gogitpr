@@ -5,7 +5,11 @@ for a datastore for those data.
 
 ## Installation
 
-`go get -u github.com/doodles526/gogitpr`
+```
+go get -u github.com/doodles526/gogitpr
+make setup
+make
+```
 
 ## Usage
 
