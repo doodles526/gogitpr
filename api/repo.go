@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// Repo is an interface for interacting with the repository endpoint of the github api
 type Repo interface {
 	Get(args *RepoArgs) ([]RepoData, error)
 }
@@ -15,6 +16,7 @@ type repo struct {
 	g *ghAPI
 }
 
+// RepoArgs represents the arguments to pass to a Get request to repos
 type RepoArgs struct {
 	User string
 	Org  string
@@ -22,14 +24,15 @@ type RepoArgs struct {
 
 func (r *RepoArgs) validate() error {
 	if len(r.User) != 0 && len(r.Org) == 0 {
-		return UserOrgErr
+		return ErrUserOrg
 	} else if len(r.User) == 0 && len(r.Org) == 0 {
-		return UserOrgErr
+		return ErrUserOrg
 	}
 
 	return nil
 }
 
+// Get fetches all the repos associated with the RepoArgs passed in
 func (r *repo) Get(args *RepoArgs) ([]RepoData, error) {
 	if err := args.validate(); err != nil {
 		return nil, err
@@ -76,6 +79,7 @@ func extractRepos(repos *[]RepoData) processFunc {
 	}
 }
 
+// RepoData represents the repository data structure returned from the github api
 type RepoData struct {
 	ID               int         `json:"id"`
 	Owner            UserData    `json:"owner"`

@@ -7,6 +7,7 @@ import (
 	"time"
 )
 
+// PullRequestArgs specifies args to pass to Get
 type PullRequestArgs struct {
 	User  string
 	Org   string
@@ -15,16 +16,17 @@ type PullRequestArgs struct {
 
 func (a *PullRequestArgs) validate() error {
 	if len(a.User) != 0 && len(a.Org) != 0 {
-		return UserOrgErr
+		return ErrUserOrg
 	}
 
 	if len(a.User) == 0 && len(a.Org) == 0 {
-		return UserOrgErr
+		return ErrUserOrg
 	}
 
 	return nil
 }
 
+// PullRequest is an interface for interacting with the PullRequest github api endpoint
 type PullRequest interface {
 	Get(args *PullRequestArgs) ([]PullRequestData, error)
 }
@@ -37,6 +39,7 @@ func (p *pullRequest) reqString() string {
 	return fmt.Sprintf("")
 }
 
+// Get will fetch all pull requests matching the arguments in PullRequestArgs
 func (p *pullRequest) Get(args *PullRequestArgs) ([]PullRequestData, error) {
 	if err := args.validate(); err != nil {
 		return nil, err

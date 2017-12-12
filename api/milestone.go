@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// MilestoneData represents a milestone of a repo/PR
 type MilestoneData struct {
 	URL          string    `json:"url"`
 	HTMLURL      string    `json:"html_url"`

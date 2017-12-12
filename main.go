@@ -41,7 +41,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	dbArgs := &db.DBArgs{
+	dbArgs := &db.Args{
 		Logger: cfg.Logger,
 	}
 

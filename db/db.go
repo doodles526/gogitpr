@@ -20,13 +20,14 @@ type DB interface {
 	GetPullRequestByID(id int) (api.PullRequestData, bool, error)
 }
 
-// DBArgs is currently empty, as to be forward compatible
+// Args is currently empty, as to be forward compatible
 // if we ever choose to back by persistent storage
-type DBArgs struct {
+type Args struct {
 	Logger *logrus.Logger
 }
 
-func NewDB(args *DBArgs) (DB, error) {
+// NewDB returns a new DB object
+func NewDB(args *Args) (DB, error) {
 	return &inMem{
 		pullRequests: make([]api.PullRequestData, 0),
 		idIndex:      make(map[int]*api.PullRequestData),

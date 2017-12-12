@@ -1,5 +1,6 @@
 package api
 
+// UserData represents data about a user returned by the github api
 type UserData struct {
 	Login             string `json:"login"`
 	ID                int    `json:"id"`

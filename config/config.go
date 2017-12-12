@@ -20,6 +20,7 @@ func init() {
 	viper.AutomaticEnv()
 }
 
+// Config represents a configuration for the gogitpr project
 type Config struct {
 	// BaseURL is the URL to use for the Github API
 	// if not set, defaults to https://api.github.com
@@ -46,6 +47,7 @@ type Config struct {
 	Logger *logrus.Logger
 }
 
+// NewConfig parses the env and returns a config from the env
 func NewConfig() (*Config, error) {
 	logger := logrus.New()
 	logger.Level = getLogLevel()

@@ -2,7 +2,6 @@ package api
 
 import (
 	"fmt"
-	"github.com/pkg/errors"
 	"net/http"
 	"net/url"
 	"strconv"
@@ -19,14 +18,16 @@ const defaultVersion = Version3
 type Version int
 
 const (
-	// Setting default to the 0 in the enum allows us to
-	// adjust default versions in our constant declaration
-	// without adjusting any code in validate()
+	// VersionDefault allows us to set a default value if none is specified
 	VersionDefault Version = iota
+	// Version3 is the github API version 3
 	Version3
+	// Version4 is the github API version 4
 	Version4
 )
 
+// GithubAPI provides access to the github API
+// TODO: Implement remaining endpoints
 type GithubAPI interface {
 	PullRequest() PullRequest
 	Repos() Repo
@@ -42,6 +43,7 @@ type ghAPI struct {
 	logger *logrus.Entry
 }
 
+// GithubAPIArgs specifies how the github API should be queried
 type GithubAPIArgs struct {
 	BaseURL         string
 	Token           string
@@ -50,6 +52,7 @@ type GithubAPIArgs struct {
 	Logger          *logrus.Logger
 }
 
+// NewGithubAPI creates a new client for accessing the github api
 func NewGithubAPI(args *GithubAPIArgs) (GithubAPI, error) {
 	if err := args.validate(); err != nil {
 		return nil, err
@@ -202,9 +205,9 @@ func (g *ghAPI) doFullPagination(args *requestArgs, f processFunc) error {
 }
 
 func argMissingError(field string) error {
-	return errors.New(fmt.Sprintf("%s must be set in GithubAPIArgs", field))
+	return fmt.Errorf("%s must be set in GithubAPIArgs", field)
 }
 
 func argUnsupported(field string, value interface{}) error {
-	return errors.New(fmt.Sprintf("Currently the value %v is not supported for %s", value, field))
+	return fmt.Errorf("Currently the value %v is not supported for %s", value, field)
 }
